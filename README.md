@@ -4,13 +4,13 @@
 
 ---
 
-A skill destroyed ~150 sessions of organizational history.
+Autonomous operations at scale require defined, versioned processes the agent reads before executing. Skills are how that works here.
 
-The session-end skill was supposed to append to a running journey log. Instead it overwrote it. 150 sessions of decisions, trade-offs, and failure documentation — gone. Root cause: the skill instructions didn't specify write mode. "Save to file" is ambiguous. The agent made a choice. It was the wrong one. Recovery was partial — some content reconstructed from embeddings. The rest was lost.
+Each skill is a versioned capability module with a standardized contract: name, description, exact trigger phrases, step-by-step workflow, authority tier, error handling, and a handoff statement declaring what was produced. 8 skills in production, covering every repeatable operation — session startup and end, document management, semantic search, database writes, workflow audits, index updates, skill creation. The contracts are the reason they run consistently across hundreds of sessions — not because the agent remembers, but because the contract is read before execution, every time.
 
-That failure produced two permanent changes. First: every skill now has explicit mode specification for any write operation. Second: skill-creator-skill added structural validation before a skill goes into production — required fields, explicit write modes, error handling, handoff statements.
+What made the contract requirements concrete: a skill destroyed ~150 sessions of organizational history. The session-end skill was supposed to append to a running journey log. Instead it overwrote it. Root cause: the instructions didn't specify write mode. "Save to file" is ambiguous. The agent made a reasonable choice. It was wrong. Recovery was partial — some content reconstructed from embeddings. The rest was lost.
 
-The problem with autonomous agents isn't getting them to do things. It's getting them to do the same things the same way, every time, across hundreds of sessions — and fail safely when they don't. Skills are the solution. Each skill is a versioned capability module with a standardized contract: name, description, exact trigger phrases, step-by-step workflow, authority tier, error handling, and a handoff statement that declares what was produced. 8 skills in production. The contracts are the reason they run consistently — not because the agent remembers, but because the contract is read before execution, every time.
+That failure produced two permanent changes. Every skill now has explicit mode specification for any write operation. And skill-creator-skill added structural validation before a skill goes into production — required fields, explicit write modes, error handling, handoff statements.
 
 **The trigger system matters more than it sounds.** A skill that fires on too broad a trigger creates false matches. A skill that fires on too narrow a trigger gets missed. The trigger set for each skill is a precision instrument: "start session, new session" triggers startup — not "session" alone, which would match dozens of unrelated mentions. Each trigger phrase is unique across all skills. The set was tested against real session transcripts to verify it doesn't fire when it shouldn't.
 
